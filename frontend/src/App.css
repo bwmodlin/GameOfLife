@@ -1,0 +1,35 @@
+.on {
+    background-color: green;
+}
+
+.off {
+    background-color: #f1f1f3;
+}
+
+.element {
+    border: 0.05vw solid #dbdbdd;
+    width: 4.2vh;
+    height: 4.2vh;
+}
+
+.row-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+
+}
+
+.grid-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 3vh;
+}
+
+.screen {
+   background-color: #dbdbdd;
+}
+
+:root {
+    background-color: #dbdbdd
+}
