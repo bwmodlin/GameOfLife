@@ -28,6 +28,8 @@
 
 .screen {
    background-color: #dbdbdd;
+    display: flex;
+    flex-direction: column;
 }
 
 :root {
@@ -38,9 +40,23 @@
     background-color: #4CAF50;
     border: none;
     color: white;
-    padding: 1vw;
-    margin-left: 0.5vw;
-    margin-right: 0.5vw;
     text-align: center;
-    font-size: 16px;
+    font-size: 20px;
+    height: 7.5vh;
+    margin-right: 0.50vw;
+    margin-left: 0.50vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    border-radius: 0.25vw;
+}
+
+.navbar {
+    padding-left: 1.5vw;
+    width: 100vw;
+    height: 10vh;
+    background-color: dimgray;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+
 }

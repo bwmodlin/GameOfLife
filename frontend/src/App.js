@@ -1,4 +1,3 @@
-import './bootstrap.css'
 import './App.css';
 import React, { useState , useEffect } from 'react'
 
@@ -105,31 +104,20 @@ function App(props) {
     }
 
     useEffect(() => {
-        let interval = null;
         if (isRun) {
-            interval = setInterval(() => setGrid(newGrid(grid)), 10)
-        } else {
-            clearInterval(interval);
+            setTimeout(() => setGrid(newGrid(grid)), 10)
         }
-        return () => {
-            clearInterval(interval);
-        };
     }, [isRun, grid]);
 
     return (
         <div className = "screen">
-            <nav className="navbar navbar-expand-lg navbar-light bg-secondary">
+            <nav className="navbar">
                 <button className="navbtn" onClick={run}>
                     {startText}
                 </button>
 
-                <button className="navbtn" onClick={handleStep}>
-                    Step
-                </button>
-
-                <button className="navbtn" onClick={() => setGrid(clear(grid))}>
-                    Clear
-                </button>
+                {isRun ? null : <button className="navbtn" onClick={handleStep}>Step</button>}
+                {isRun ? null : <button className="navbtn" onClick={() => setGrid(clear(grid))}>Clear</button>}
 
             </nav>
             <div className="grid-container">
