@@ -1,6 +1,7 @@
+import './bootstrap.css'
 import './App.css';
 import React, { useState , useEffect } from 'react'
-import './bootstrap.css'
+
 
 function deepCopy(grid) {
     let copy = new Array(grid.length)
@@ -106,7 +107,7 @@ function App(props) {
     useEffect(() => {
         let interval = null;
         if (isRun) {
-            interval = setInterval(() => setGrid(newGrid(grid)), 500)
+            interval = setInterval(() => setGrid(newGrid(grid)), 10)
         } else {
             clearInterval(interval);
         }
@@ -118,15 +119,15 @@ function App(props) {
     return (
         <div className = "screen">
             <nav className="navbar navbar-expand-lg navbar-light bg-secondary">
-                <button className="btn btn-success" onClick={run}>
+                <button className="navbtn" onClick={run}>
                     {startText}
                 </button>
 
-                <button className="btn btn-success" onClick={handleStep}>
+                <button className="navbtn" onClick={handleStep}>
                     Step
                 </button>
 
-                <button className="btn btn-success" onClick={() => setGrid(clear(grid))}>
+                <button className="navbtn" onClick={() => setGrid(clear(grid))}>
                     Clear
                 </button>
 
