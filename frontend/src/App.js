@@ -26,8 +26,8 @@ function App(props) {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Game grid={grid}/>}/>
-                <Route path="/about" element={<About />}/>
+                <Route exact path="/" element={<Game grid={grid}/>}/>
+                <Route exact path="/about" element={<About />}/>
             </Routes>
         </Router>
 

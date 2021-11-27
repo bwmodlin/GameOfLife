@@ -27,41 +27,40 @@ function getNeighbors(grid, w, h) {
     return neighbors
 }
 
+function visit(grid, grid_copy, i, j) {
+    let neighbors = getNeighbors(grid, i, j)
+    if (grid[i][j]) {
+        if (!(neighbors === 2 || neighbors === 3)) {
+            grid_copy[i][j] = false
+        }
+    } else {
+        if (neighbors === 3) {
+            grid_copy[i][j] = true
+        }
+    }
+}
+
 // only checks cells that are at least next to another active cell to optimize a little bit
 function newGrid(grid) {
-    let toVisit = new Array(grid.length)
+    let alreadyVisited = new Array(grid.length)
     for (let i = 0; i < grid.length; i++) {
-        toVisit[i] = new Array(grid[0].length)
-        toVisit[i].fill(false)
+        alreadyVisited[i] = new Array(grid[0].length)
+        alreadyVisited[i].fill(false)
     }
 
     let grid_copy = deepCopy(grid)
     for (let i = 0; i < grid.length; i++) {
         for (let j = 0; j < grid[0].length; j++) {
             if (grid[i][j]) {
-                toVisit[i][j] = true
                 for (let k = -1; k <= 1; k++) {
                     for (let l = -1; l <= 1; l++) {
                         if (i+k >= 0 && j+l >= 0 && i+k < grid.length && j+l < grid[0].length) {
-                            toVisit[i+k][j+l] = true
-                        }
-                    }
-                }
-            }
-        }
-    }
+                            if (!alreadyVisited[i+k][j+l]) {
+                                visit(grid, grid_copy, i+k, j+l)
+                                alreadyVisited[i+k][j+l] = true
+                            }
 
-    for (let i = 0; i < toVisit.length; i++) {
-        for (let j = 0; j < toVisit[0].length; j++) {
-            if (toVisit[i][j]) {
-                let neighbors = getNeighbors(grid, i, j)
-                if (grid[i][j]) {
-                    if (!(neighbors === 2 || neighbors === 3)) {
-                        grid_copy[i][j] = false
-                    }
-                } else {
-                    if (neighbors === 3) {
-                        grid_copy[i][j] = true
+                        }
                     }
                 }
             }
