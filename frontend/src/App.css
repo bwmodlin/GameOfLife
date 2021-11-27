@@ -42,6 +42,7 @@
     border: none;
     color: darkgrey;
     font-size: 3vh;
+    max-width: 10vw;
     height: 7vh;
     margin-right: 1vw;
     margin-left: 1vw;

@@ -128,7 +128,12 @@ function App(props) {
 
     useEffect(() => {
         if (isRun) {
-            setTimeout(() => setGrid(newGrid(grid)), 10)
+            let new_grid = newGrid(grid)
+            setTimeout(() => setGrid(new_grid), 10)
+            if (!new_grid.some(row => row.includes(true))) { // if grid is empty, stop run automatically
+                setRun(false)
+                setText("Run")
+            }
         }
     }, [isRun, grid]);
 

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from "react-router-dom";
 
 const BOARD_WIDTH = 40
 const BOARD_HEIGHT = 20
@@ -20,9 +21,9 @@ grid[4][22] = true; grid[3][22] = true; grid[2][23] = true; grid[6][23] = true; 
 grid[6][25] = true; grid[7][25] = true; grid[3][35] = true; grid[3][36] = true; grid[4][35] = true; grid[4][36] = true;
 
 ReactDOM.render(
-  <React.StrictMode className="root">
+  <BrowserRouter>
     <App grid={grid} />
-  </React.StrictMode>,
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
