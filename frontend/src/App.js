@@ -1,7 +1,6 @@
 import './App.css';
 import React, { useState , useEffect } from 'react'
 
-
 function deepCopy(grid) {
     let copy = new Array(grid.length)
     for (let i = 0; i < grid.length; i++) {
@@ -27,18 +26,42 @@ function getNeighbors(grid, w, h) {
     return neighbors
 }
 
+// only checks cells that are at least next to another active cell to optimize a little bit
 function newGrid(grid) {
+    let toVisit = new Array(grid.length)
+    for (let i = 0; i < grid.length; i++) {
+        toVisit[i] = new Array(grid[0].length)
+        toVisit[i].fill(false)
+    }
+
     let grid_copy = deepCopy(grid)
     for (let i = 0; i < grid.length; i++) {
         for (let j = 0; j < grid[0].length; j++) {
-            let neighbors = getNeighbors(grid, i, j)
             if (grid[i][j]) {
-                if (!(neighbors === 2 || neighbors === 3)) {
-                    grid_copy[i][j] = false
+                toVisit[i][j] = true
+                for (let k = -1; k <= 1; k++) {
+                    for (let l = -1; l <= 1; l++) {
+                        if (i+k >= 0 && j+l >= 0 && i+k < grid.length && j+l < grid[0].length) {
+                            toVisit[i+k][j+l] = true
+                        }
+                    }
                 }
-            } else {
-                if (neighbors === 3) {
-                    grid_copy[i][j] = true
+            }
+        }
+    }
+
+    for (let i = 0; i < toVisit.length; i++) {
+        for (let j = 0; j < toVisit[0].length; j++) {
+            if (toVisit[i][j]) {
+                let neighbors = getNeighbors(grid, i, j)
+                if (grid[i][j]) {
+                    if (!(neighbors === 2 || neighbors === 3)) {
+                        grid_copy[i][j] = false
+                    }
+                } else {
+                    if (neighbors === 3) {
+                        grid_copy[i][j] = true
+                    }
                 }
             }
         }
@@ -112,24 +135,42 @@ function App(props) {
     return (
         <div className = "screen">
             <nav className="navbar">
-                <button className="navbtn" onClick={run}>
-                    {startText}
-                </button>
+                <div className="left">
 
-                {isRun ? null : <button className="navbtn" onClick={handleStep}>Step</button>}
-                {isRun ? null : <button className="navbtn" onClick={() => setGrid(clear(grid))}>Clear</button>}
+                    {isRun ? null : <button className="navbtn" onClick={handleStep}>Step</button>}
+
+                    <button className={startText==="Run" ? "navbtn" : " navbtn btn-red"} onClick={run}>
+                        {startText}
+                    </button>
+
+                    {isRun ? null : <button className="navbtn" onClick={() => setGrid(clear(grid))}>Clear</button>}
+                </div>
+                <div className="center">
+                    <div className="nav-title">
+                        Conway's Game of Life
+                    </div>
+                </div>
+                <div className="right">
+
+                    <button className="navbtn" >
+                        Saved
+                    </button>
+                    <button className="navbtn">
+                        Login
+                    </button>
+                    <button className="navbtn" >
+                        About
+                    </button>
+                </div>
 
             </nav>
             <div className="grid-container">
                 {grid.map((row) => (<Row state={grid.indexOf(row)} row={row} grid={grid}/>))}
             </div>
+
+
         </div>
-
     )
-
-
-
 }
-
 
 export default App;
