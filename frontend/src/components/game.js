@@ -143,11 +143,11 @@ function Game(props) {
         )
     }
 
+
     return (
         <div className = "screen">
             <nav className="navbar">
                 <div className="left">
-
                     {isRun ? null : <button className="navbtn" onClick={handleStep}>Step</button>}
 
                     <button className={startText==="Run" ? "navbtn" : " navbtn btn-red"} onClick={run}>
