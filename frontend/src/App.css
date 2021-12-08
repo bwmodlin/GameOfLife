@@ -41,7 +41,7 @@
     border: none;
     color: darkgrey;
     font-size: 1.5vw;
-    width: auto;
+    width: 30%;
     height: auto;
     margin-right: 1vw;
     margin-left: 1vw;
@@ -49,6 +49,8 @@
     border-radius: 0.25vw;
     align-self: center;
     justify-self: center;
+    text-decoration: none;
+    text-align: center;
 }
 
 .navbar {
@@ -93,4 +95,9 @@
 
 .btn-red {
     background-color: #5e1622;
+}
+
+
+.navlink {
+    margin-right: 10%;
 }

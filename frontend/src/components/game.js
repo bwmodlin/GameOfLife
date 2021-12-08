@@ -1,6 +1,7 @@
 import '../App.css';
 import React, { useState , useEffect } from 'react'
 import { isMobile } from 'react-device-detect'
+import {Link} from "react-router-dom";
 
 function deepCopy(grid) {
     let copy = new Array(grid.length)
@@ -169,9 +170,9 @@ function Game(props) {
                     <button className="navbtn">
                         Login
                     </button>
-                    <button className="navbtn" >
-                        About
-                    </button>
+
+                    <Link to="/about" className="navbtn navlink">About</Link>
+
                 </div>
 
             </nav>
