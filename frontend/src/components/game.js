@@ -94,7 +94,7 @@ function Game(props) {
     const BOARD_WIDTH = 40
     const BOARD_HEIGHT = 20
 
-    const getGrid = () => {
+    const handlePreset = () => {
         axios.get('http://localhost:3001/api/presets')
             .then( (res) => {
                 const arr = res.data[0].board
@@ -104,8 +104,6 @@ function Game(props) {
 
             )
     }
-
-    useEffect(() => {     getGrid();}, []);
 
     function Element(props) {
         let value = props.value
@@ -190,8 +188,8 @@ function Game(props) {
                 </div>
                 <div className="right">
 
-                    <button className="navbtn" >
-                        Saved
+                    <button className="navbtn"  onClick={handlePreset}>
+                        Preset
                     </button>
                     <GoogleLogin
                         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
