@@ -3,12 +3,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App'
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from "react-router-dom";
 
+const BOARD_WIDTH = 40
+const BOARD_HEIGHT = 20
+
+let grid = new Array(BOARD_HEIGHT)
+for (let i = 0; i < BOARD_HEIGHT; i++) {
+    grid[i] = new Array(BOARD_WIDTH)
+    grid[i] = grid[i].fill(false)
+}
 
 ReactDOM.render(
   <React.StrictMode>
-      <App />
+      <App grid={grid}/>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -2,6 +2,13 @@ import '../App.css';
 import React, { useState , useEffect } from 'react'
 import { isMobile } from 'react-device-detect'
 import {Link} from "react-router-dom";
+import {GoogleLogin} from "react-google-login"
+import axios from "axios"
+import {reshape} from 'mathjs'
+
+
+require("dotenv").config();
+
 
 function deepCopy(grid) {
     let copy = new Array(grid.length)
@@ -84,6 +91,21 @@ function Game(props) {
     let [grid, setGrid] = useState(props.grid)
     let [isRun, setRun] = useState(false)
     let [startText, setText] = useState("Run")
+    const BOARD_WIDTH = 40
+    const BOARD_HEIGHT = 20
+
+    const getGrid = () => {
+        axios.get('http://localhost:3001/api/presets')
+            .then( (res) => {
+                const arr = res.data[0].board
+                const newArr = reshape(arr, [BOARD_HEIGHT, BOARD_WIDTH])
+                setGrid(newArr)
+            }
+
+            )
+    }
+
+    useEffect(() => {     getGrid();}, []);
 
     function Element(props) {
         let value = props.value
@@ -130,7 +152,7 @@ function Game(props) {
     useEffect(() => {
         if (isRun) {
             let new_grid = newGrid(grid)
-            setTimeout(() => setGrid(new_grid), 10)
+            setTimeout(() => setGrid(new_grid), 30)
             if (!new_grid.some(row => row.includes(true))) { // if grid is empty, stop run automatically
                 setRun(false)
                 setText("Run")
@@ -142,6 +164,10 @@ function Game(props) {
         return (
             <div> No mobile support yet </div>
         )
+    }
+
+    const handleLogin = () => {
+        
     }
 
 
@@ -167,9 +193,13 @@ function Game(props) {
                     <button className="navbtn" >
                         Saved
                     </button>
-                    <button className="navbtn">
-                        Login
-                    </button>
+                    <GoogleLogin
+                        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                        buttonText="Log in with Google"
+                        onSuccess={handleLogin}
+                        onFailure={handleLogin}
+                        cookiePolicy={'single_host_origin'}
+                    />
 
                     <Link to="/about" className="navbtn navlink">About</Link>
 
