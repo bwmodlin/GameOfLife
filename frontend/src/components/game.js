@@ -95,7 +95,7 @@ function Game(props) {
     const BOARD_HEIGHT = 20
 
     const handlePreset = () => {
-        axios.get('http://localhost:3001/api/presets')
+        axios.get('https://modlingameoflife.herokuapp.com/api/presets')
             .then( (res) => {
                 const arr = res.data[0].board
                 const newArr = reshape(arr, [BOARD_HEIGHT, BOARD_WIDTH])
