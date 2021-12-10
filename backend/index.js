@@ -14,6 +14,8 @@ app.use(express.static('build'))
 app.get('/api/presets', (request, response) =>
     database.getPresets((data) => response.json(data)))
 
+
+
 app.get('*', (request, response) =>
     response.sendFile(path.resolve('build', 'index.html')))
 

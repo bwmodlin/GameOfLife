@@ -13,6 +13,7 @@ const getPresets = (callback) => {
     pool
         .query(text)
         .then((res) => {
+                console.log(res.rows)
                 callback(res.rows)
             }
         )
