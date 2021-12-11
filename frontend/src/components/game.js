@@ -1,10 +1,14 @@
 import '../App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 import React, { useState , useEffect } from 'react'
 import { isMobile } from 'react-device-detect'
 import {Link} from "react-router-dom";
 import {GoogleLogin} from "react-google-login"
 import axios from "axios"
 import {reshape} from 'mathjs'
+import {DropdownButton, Dropdown, Navbar, Nav, Button, Container, NavDropdown} from 'react-bootstrap'
 
 
 require("dotenv").config();
@@ -93,16 +97,25 @@ function Game(props) {
     let [startText, setText] = useState("Run")
     const BOARD_WIDTH = 40
     const BOARD_HEIGHT = 20
+    let [saved, setSaved] = useState([])
 
-    const handlePreset = () => {
+    useEffect(() => {
         axios.get('https://modlingameoflife.herokuapp.com/api/presets')
             .then( (res) => {
-                const arr = res.data[0].board
-                const newArr = reshape(arr, [BOARD_HEIGHT, BOARD_WIDTH])
-                setGrid(newArr)
+                setSaved(res.data)
             }
 
             )
+    }, []);
+
+    const handleSaved = (index) => {
+        return (
+            () => {
+                const arr = saved[index].board
+                const newArr = reshape(arr, [BOARD_HEIGHT, BOARD_WIDTH])
+                setGrid(newArr)
+            }
+        )
     }
 
     function Element(props) {
@@ -132,6 +145,13 @@ function Game(props) {
             )
 
     }
+
+    function DropdownItem(props) {
+        return (
+            <NavDropdown.Item onClick={handleSaved(saved.indexOf(props.item))}><span className="navbar-text">{props.item.name}</span></NavDropdown.Item>
+        )
+    }
+
 
     const run = () => {
         if (isRun) {
@@ -165,37 +185,40 @@ function Game(props) {
     }
 
     const handleLogin = () => {
-        
+
     }
 
 
     return (
         <div className = "screen">
-            <nav className="navbar">
-                <div className="left">
-                    {isRun ? null : <button className="navbtn" onClick={handleStep}>Step</button>}
+            <Navbar expand="lg" className="navbar-color" fixed="top">
+                <Container>
+                    <Navbar.Brand>
+                        <span className="nav-title">Conway's Game of Life</span>
+                    </Navbar.Brand>
+                    <Navbar.Collapse>
+                        <Nav>
+                            <Nav.Link href="/about"><span className="navbar-text">About</span></Nav.Link>
+                            <NavDropdown title={<span className="navbar-text">Saved</span>} id="basic-nav-dropdown">
+                                {saved.map((save) => (<DropdownItem item={save}/>))}
+                            </NavDropdown>
+                        </Nav>
 
-                    <button className={startText==="Run" ? "navbtn" : " navbtn btn-red"} onClick={run}>
-                        {startText}
-                    </button>
+                        <Nav.Link onClick={run}>
+                            <span className={startText==="Run" ? "navbar-text" : "navbar-text text-red"}>
+                                {startText}
+                            </span>
 
-                </div>
-                <div className="center">
-                    <div className="nav-title">
-                        Conway's Game of Life
-                    </div>
-                </div>
-                <div className="right">
+                        </Nav.Link>
 
-                    <button className="navbtn"  onClick={handlePreset}>
-                        Glider!
-                    </button>
+                        {isRun ? null : <Nav.Link onClick={handleStep}><span className="navbar-text">Step</span></Nav.Link>}
 
-                    {isRun ? null : <button className="navbtn" onClick={() => setGrid(clear(grid))}>Clear</button>}
+                        {isRun ? null : <Nav.Link onClick={() => setGrid(clear(grid))}><span className="navbar-text">Clear</span></Nav.Link>}
+                    </Navbar.Collapse>
+                </Container>
 
-                </div>
+            </Navbar>
 
-            </nav>
             <div className="grid-container">
                 {grid.map((row) => (<Row state={grid.indexOf(row)} row={row} grid={grid}/>))}
             </div>
