@@ -6,7 +6,7 @@ const connectionString = process.env.DATABASE_URL
 
 const pool = new Pool({
     connectionString: connectionString,
-    ssl: true
+    ssl: { rejectUnauthorized: false },
 })
 
 const getPresets = (callback) => {
@@ -14,7 +14,6 @@ const getPresets = (callback) => {
     pool
         .query(text)
         .then((res) => {
-                console.log(res.rows)
                 callback(res.rows)
             }
         )
