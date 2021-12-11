@@ -179,7 +179,6 @@ function Game(props) {
                         {startText}
                     </button>
 
-                    {isRun ? null : <button className="navbtn" onClick={() => setGrid(clear(grid))}>Clear</button>}
                 </div>
                 <div className="center">
                     <div className="nav-title">
@@ -189,17 +188,10 @@ function Game(props) {
                 <div className="right">
 
                     <button className="navbtn"  onClick={handlePreset}>
-                        Preset
+                        Glider!
                     </button>
-                    <GoogleLogin
-                        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                        buttonText="Log in with Google"
-                        onSuccess={handleLogin}
-                        onFailure={handleLogin}
-                        cookiePolicy={'single_host_origin'}
-                    />
 
-                    <Link to="/about" className="navbtn navlink">About</Link>
+                    {isRun ? null : <button className="navbtn" onClick={() => setGrid(clear(grid))}>Clear</button>}
 
                 </div>
 
