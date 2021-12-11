@@ -25,14 +25,6 @@ function App(props) {
     )
 }
 
-const BOARD_WIDTH = 40
-    const BOARD_HEIGHT = 20
-
-    let grid = new Array(BOARD_HEIGHT)
-    for (let i = 0; i < BOARD_HEIGHT; i++) {
-        grid[i] = new Array(BOARD_WIDTH)
-        grid[i] = grid[i].fill(false)
-    }
 
 export default App
 
