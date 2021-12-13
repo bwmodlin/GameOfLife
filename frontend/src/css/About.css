@@ -1,0 +1,29 @@
+.rules {
+    background-color: lightgrey;
+}
+
+.about-container {
+
+    background-color: lightgrey;
+    position: relative;
+    border-radius: 3vh;
+    padding: 2%;
+    margin-left: 3vw;
+    margin-right: 3vw;
+    margin-top: 3vh;
+    width: 94vw;
+    font-family: Calibri;
+}
+
+.github-link {
+    text-decoration: none;
+}
+
+.title {
+    text-align: center;
+}
+
+.btn-home {
+    margin-top: 2vh;
+    margin-left: 2vw;
+}
